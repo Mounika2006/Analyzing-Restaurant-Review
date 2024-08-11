@@ -1,0 +1,65 @@
+import pandas as pd
+
+
+# Sample restaurant reviews data (replace with your own data)
+data = {
+    "Review": [
+        "Delicious",
+        "Excellent",
+        "Amazing",
+        "Incredible",
+        "Worth the price",
+        "Great Service",
+        "Friendly Service",
+        "Fresh",
+        "Waiting time is more",
+        "Very disappointing",
+        "Rude server",
+        "Not cooked properly",
+        "Terrible Service",
+        "Bad Experience",
+        "Overpriced",
+        "Expensive",
+        "Bland",
+        "Ambiance",
+        "Family Friendly",
+        "Flavourless",
+        "Not Tasty",
+        "Slow Service",
+        "Not Recommended",
+        "Too Bad",
+        "Food Poisoned",
+        "Highly Recommended",
+    ],
+    "Rating": [5,4,4,5,5,5,5,4,1,1,1,1,1,1,1,0,2,3,4,1,0,0,0,1,0,5],
+}
+
+# Create a Pandas DataFrame
+df = pd.DataFrame(data)
+
+# Calculate average rating
+average_rating = df["Rating"].mean()
+print("Average rating:", average_rating)
+
+# Find frequent positive and negative words
+positive_words = ["Delicous","Excellent","Amazing","Incredible","Worth the price","Great Service","Friendly service","Fresh","Family Freindly","Highly recommended"]
+negative_words = ["Waiting time is more","Very Disappointing","Rude server","Not cooked properly","Terrible Service","Bad Experience","Overpriced","Expensive","Bland","Flavourless","Not Tasty","Slow Service","Not Recommended","Too Bad","Food Poisoned"]
+
+positive_counts = [
+    len([word for word in review.split() if word in positive_words])
+    for review in df["Review"]
+]
+negative_counts = [
+    len([word for word in review.split() if word in negative_words])
+    for review in df["Review"]
+]
+
+df["Positive_Count"] = positive_counts
+df["Negative_Count"] = negative_counts
+
+# Print most frequent positive and negative words
+print("Most frequent positive words:")
+print(df[df["Positive_Count"] > 0]["Review"])
+
+print("Most frequent negative words:")
+print(df[df["Negative_Count"] > 0]["Review"])
